@@ -10,6 +10,6 @@ class PlaygroundBundle extends Bundle
     const VERSION = '0.1.0-dev';
 
     public function build(ContainerBuilder $container) {
-        $container->addCompilerPass(new DependencyInjection\PlaygroudnCompilerPass());
+        $container->addCompilerPass(new DependencyInjection\PlaygroundCompilerPass());
     }
 }
