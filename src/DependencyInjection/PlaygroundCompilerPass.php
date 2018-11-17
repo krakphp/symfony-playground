@@ -13,7 +13,7 @@ class PlaygroundCompilerPass implements CompilerPassInterface
 {
     public function process(ContainerBuilder $container) {
         $projectDir = $container->getParameter("kernel.project_dir");
-        $playgroundFn = @include_once $projectDir . '/playground.php';
+        $playgroundFn = @include $projectDir . '/playground.php';
         if (!$playgroundFn) {
             return;
         }
