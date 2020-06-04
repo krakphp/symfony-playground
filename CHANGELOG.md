@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+## 0.1.2 - 2020-06-03
+
+- Added test coverage
+- Cache only gets rebuilt when parameters change instead of whenever the file is saved.
+
 ## 0.1.1 - 2018-11-17
 
 - Fixed issue when compiler pass would run twice
