@@ -28,6 +28,7 @@ final class PlaygroundTest extends BaseBundleTestCase
             $this->kernel->shutdown();
             shell_exec("rm -rf {$this->kernel->getCacheDir()}");
         }
+        $this->given_the_playground_php_file_is_removed();
     }
 
     protected function createKernel() {
@@ -46,6 +47,7 @@ final class PlaygroundTest extends BaseBundleTestCase
         $this->when_the_kernel_is_booted();
         $this->then_no_exceptions_should_be_thrown();
         $this->then_the_container_should_be_built(1);
+        $this->then_the_service_does_not_exist('krak.symfony_playground.playground_command');
     }
 
     public function test_rebuilds_sf_di_cache_on_first_invoke() {
@@ -75,6 +77,12 @@ final class PlaygroundTest extends BaseBundleTestCase
         $this->given_the_playground_php_file_is_set_with('Psr\Log\LoggerInterface $logger1');
         $this->when_the_kernel_is_rebooted();
         $this->then_the_container_should_be_built(2);
+    }
+
+    public function test_allows_playground_files_with_no_args() {
+        $this->given_the_playground_php_file_is_set_with('');
+        $this->when_the_kernel_is_booted();
+        $this->then_no_exceptions_should_be_thrown();
     }
 
     private function given_the_kernel_is_booted_and_waits(?int $seconds = 1) {
@@ -124,5 +132,9 @@ PHP
 
     private function then_the_container_should_be_built(int $times) {
         $this->assertEquals($times, $this->kernel->containerBuildCount);
+    }
+
+    private function then_the_service_does_not_exist(string $id) {
+        $this->assertFalse($this->kernel->getContainer()->has($id));
     }
 }

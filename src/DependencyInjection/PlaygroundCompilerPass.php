@@ -15,6 +15,7 @@ class PlaygroundCompilerPass implements CompilerPassInterface
         $projectDir = $container->getParameter("kernel.project_dir");
         $reflectionFn = self::loadPlaygroundCallableReflection($projectDir . '/playground.php');
         if (!$reflectionFn) {
+            $container->removeDefinition("krak.symfony_playground.playground_command");
             return;
         }
 

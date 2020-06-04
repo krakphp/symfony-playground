@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+## 0.1.3 - 2020-06-03
+
+- Only register the playground command if playground file exists
+
 ## 0.1.2 - 2020-06-03
 
 - Added test coverage
