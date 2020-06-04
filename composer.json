@@ -14,7 +14,7 @@
     "authors": [
         {
             "name": "RJ Garcia",
-            "email": "rj@bighead.net"
+            "email": "ragboyjr@icloud.com"
         }
     ],
     "autoload": {
@@ -22,11 +22,19 @@
             "Krak\\SymfonyPlayground\\": "src"
         }
     },
-    "require": {
-        "symfony/dependency-injection": "^4.0",
-        "symfony/http-kernel": "^4.0"
+    "autoload-dev": {
+        "psr-4": {
+            "Krak\\SymfonyPlayground\\Tests\\": "tests"
+        }
     },
     "require-dev": {
-        "peridot-php/peridot": "^1.19"
+        "nyholm/symfony-bundle-test": "^1.6",
+        "phpunit/phpunit": "^9.1",
+        "symfony/dependency-injection": "^4.4",
+        "symfony/http-kernel": "^4.4",
+        "symfony/var-dumper": "^5.1"
+    },
+    "scripts": {
+        "test": "phpunit --testdox --colors=always"
     }
 }

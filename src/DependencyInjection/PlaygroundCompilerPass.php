@@ -13,15 +13,10 @@ class PlaygroundCompilerPass implements CompilerPassInterface
 {
     public function process(ContainerBuilder $container) {
         $projectDir = $container->getParameter("kernel.project_dir");
-        $playgroundFn = @include $projectDir . '/playground.php';
-        if (!$playgroundFn) {
+        $reflectionFn = self::loadPlaygroundCallableReflection($projectDir . '/playground.php');
+        if (!$reflectionFn) {
             return;
         }
-        if (!is_callable($playgroundFn)) {
-            throw new \RuntimeException('playground.php must return a function.');
-        }
-
-        $reflectionFn = new \ReflectionFunction($playgroundFn);
 
         $args = [];
         foreach ($reflectionFn->getParameters() as $param) {
@@ -30,5 +25,18 @@ class PlaygroundCompilerPass implements CompilerPassInterface
         }
 
         $container->getDefinition("krak.symfony_playground.playground_command")->replaceArgument(0, ServiceLocatorTagPass::register($container, $args));
+    }
+
+    public static function loadPlaygroundCallableReflection(string $path): ?\ReflectionFunction {
+        $playgroundFn = @include $path;
+        if (!$playgroundFn) {
+            return null;
+        }
+
+        if (!is_callable($playgroundFn)) {
+            throw new \RuntimeException('playground.php must return a function.');
+        }
+
+        return new \ReflectionFunction($playgroundFn);
     }
 }
