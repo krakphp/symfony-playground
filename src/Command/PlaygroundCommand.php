@@ -34,6 +34,6 @@ class PlaygroundCommand extends Command
         $params = array_map(function($param) {
             return $this->container->get($param->name);
         }, $rf->getParameters());
-        $playgroundFn(...$params);
+        return $playgroundFn(...$params) ?? 0;
     }
 }
